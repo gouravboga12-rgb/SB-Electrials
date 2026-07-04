@@ -334,6 +334,51 @@ export default function Home() {
 
   const whatsappUrlHomeCalc = `https://wa.me/918867710294?text=${buildWhatsAppMessage()}`;
 
+  // ----------------------------------------------------
+  // Home Page Contact Form State & Handlers
+  // ----------------------------------------------------
+  const [contactFormData, setContactFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    service: '',
+    message: ''
+  });
+  const [isContactSubmitting, setIsContactSubmitting] = useState(false);
+  const [contactSubmitStatus, setContactSubmitStatus] = useState(null);
+
+  const handleContactInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    if (!contactFormData.fullName || !contactFormData.phone || !contactFormData.email || !contactFormData.service || !contactFormData.message) {
+      setContactSubmitStatus('error');
+      return;
+    }
+    setIsContactSubmitting(true);
+    setContactSubmitStatus(null);
+    setTimeout(() => {
+      setIsContactSubmitting(false);
+      setContactSubmitStatus('success');
+      // Redirect to WhatsApp with the contact details
+      const text = `Hello SB Electricals, I am contacting you from the Home page regarding solar services. Name: ${contactFormData.fullName}, Phone: ${contactFormData.phone}, Email: ${contactFormData.email}, Service: ${contactFormData.service}, Message: ${contactFormData.message}`;
+      window.open(`https://wa.me/918867710294?text=${encodeURIComponent(text)}`, '_blank');
+      setContactFormData({
+        fullName: '',
+        phone: '',
+        email: '',
+        service: '',
+        message: ''
+      });
+    }, 1200);
+  };
+
   return (
     <div className="relative overflow-hidden min-h-screen bg-white pt-24 lg:pt-24">
       
@@ -1323,6 +1368,221 @@ export default function Home() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 11. CONTACT US LAYOUT (Embedded from Contact Page) */}
+      {/* ========================================================================= */}
+      <section id="contact-us-embedded" className="py-20 border-t border-slate-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          
+          {/* Column 1: Info Cards */}
+          <div className="lg:col-span-5 space-y-8 text-left" data-aos="fade-right">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-emerald-700 text-xs font-bold uppercase tracking-wider">
+                Connect Directly
+              </span>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Office Details & Contact Cards</h3>
+              <p className="text-slate-500 text-xs leading-relaxed font-semibold">
+                Connect with our engineering advisors instantly on WhatsApp, give us a phone call, or drop by our service office in Bengaluru.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              
+              {/* Phone card */}
+              <div className="glass-panel p-5 rounded-2xl flex gap-4 items-start border border-slate-200 bg-white shadow-sm">
+                <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600">
+                  <Icons.Phone className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-400">Call Us Anytime</h4>
+                  <a href="tel:+918867710294" className="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors">
+                    +91 88677 10294
+                  </a>
+                  <p className="text-[10px] text-slate-400 mt-0.5 font-semibold">Monday to Saturday: 9am - 7pm</p>
+                </div>
+              </div>
+
+              {/* WhatsApp Card */}
+              <div className="glass-panel p-5 rounded-2xl flex gap-4 items-start border border-slate-200 bg-white shadow-sm">
+                <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600">
+                  <Icons.MessageSquare className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-400">Chat on WhatsApp</h4>
+                  <a href={`https://wa.me/918867710294?text=${encodeURIComponent("Hello SB Electricals, I am contacting you from the Home page regarding solar services.")}`} target="_blank" rel="noopener noreferrer" className="text-base font-bold text-emerald-600 hover:text-emerald-700 transition-colors">
+                    +91 88677 10294
+                  </a>
+                  <p className="text-[10px] text-slate-400 mt-0.5 font-semibold">Pre-filled query & fast responses</p>
+                </div>
+              </div>
+
+              {/* Email Card */}
+              <div className="glass-panel p-5 rounded-2xl flex gap-4 items-start border border-slate-200 bg-white shadow-sm">
+                <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600">
+                  <Icons.Mail className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-400">Email Support</h4>
+                  <a href="mailto:sbelectricals013@gmail.com" className="text-sm font-bold text-slate-900 hover:text-emerald-600 transition-colors break-all">
+                    sbelectricals013@gmail.com
+                  </a>
+                  <p className="text-[10px] text-slate-400 mt-0.5 font-semibold">For tenders, bids, and quotes</p>
+                </div>
+              </div>
+
+              {/* Address Card */}
+              <div className="glass-panel p-5 rounded-2xl flex gap-4 items-start border border-slate-200 bg-white shadow-sm">
+                <div className="bg-emerald-50 p-2.5 rounded-xl text-emerald-600">
+                  <Icons.MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-400">Office Address</h4>
+                  <p className="text-xs font-bold text-slate-800 leading-relaxed">
+                    Ground Floor 183/1 Madhura Nagar,<br />
+                    2nd main Moodalpalya Nagarbhavi Stage 2,<br />
+                    Bengaluru, Bengaluru Urban - 560072
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Column 2: Form Panel */}
+          <div className="lg:col-span-7" data-aos="fade-left">
+            <div className="glass-panel p-8 md:p-10 border border-slate-200 rounded-3xl text-left bg-slate-50/50">
+              <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-1">Request Free Consultation</h3>
+              <p className="text-xs text-slate-500 mb-6 leading-relaxed font-semibold">
+                Fill out our consultation form. Our technician will contact you to explain solar panels, structures, and pricing ranges.
+              </p>
+
+              {contactSubmitStatus === 'success' && (
+                <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-start gap-3 mb-6">
+                  <Icons.CheckCircle className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900">Request Sent Successfully!</h4>
+                    <p className="text-xs text-slate-600 mt-0.5 font-semibold">
+                      Thank you. We have received your query. An engineer will reach out to you within 24 hours.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {contactSubmitStatus === 'error' && (
+                <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex items-start gap-3 mb-6">
+                  <Icons.AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900">Incomplete Fields</h4>
+                    <p className="text-xs text-slate-600 mt-0.5 font-semibold">
+                      Please make sure all form elements are filled out before submitting.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Full Name *</label>
+                    <input 
+                      type="text" 
+                      name="fullName"
+                      value={contactFormData.fullName}
+                      onChange={handleContactInputChange}
+                      placeholder="e.g. Ramesh Kumar"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 font-bold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Phone Number *</label>
+                    <input 
+                      type="tel" 
+                      name="phone"
+                      value={contactFormData.phone}
+                      onChange={handleContactInputChange}
+                      placeholder="e.g. 96768 24255"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 font-bold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Email Address *</label>
+                    <input 
+                      type="email" 
+                      name="email"
+                      value={contactFormData.email}
+                      onChange={handleContactInputChange}
+                      placeholder="e.g. ramesh@gmail.com"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 font-bold"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Service Required *</label>
+                    <select 
+                      name="service"
+                      value={contactFormData.service}
+                      onChange={handleContactInputChange}
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 cursor-pointer font-bold"
+                      required
+                    >
+                      <option value="" disabled>Select a Service</option>
+                      {servicesDropdown.map((option, index) => (
+                        <option key={index} value={option} className="bg-white text-slate-800">
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Your Message *</label>
+                  <textarea 
+                    name="message"
+                    rows="3"
+                    value={contactFormData.message}
+                    onChange={handleContactInputChange}
+                    placeholder="Provide details about your roof space, current bill amount, requirements..."
+                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-emerald-600 resize-none font-bold"
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isContactSubmitting}
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-3.5 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg disabled:opacity-50 transition-all duration-300 cursor-pointer active:scale-[0.99] text-xs uppercase tracking-wider"
+                >
+                  {isContactSubmitting ? <span>Sending...</span> : <span>Send Consultation Request</span>}
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 12. GOOGLE MAPS EMBED */}
+      <section className="pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="zoom-in">
+        <div className="glass-panel p-1.5 rounded-3xl border border-slate-200 shadow-xl relative overflow-hidden h-[350px] bg-white">
+          <iframe 
+            title="SB Embedded Maps"
+            src="https://maps.google.com/maps?q=Ground%20Floor%20183/1%20Madhura%20Nagar%202nd%20main%20Moodalpalya%20Nagarbhavi%20Stage%202%20Bengaluru%20Bengaluru%20Urban-560072&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%" 
+            height="100%" 
+            style={{ border: 0, borderRadius: '20px' }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </section>
 
