@@ -19,6 +19,7 @@ export default function Calculator() {
   const [formData, setFormData] = useState({
     name: '',
     city: 'Bengaluru',
+    otherCity: '',
     pincode: '',
     mobile: '',
     monthlyBill: 3000,
@@ -40,7 +41,7 @@ export default function Calculator() {
   const [errors, setErrors] = useState({});
 
   // Cities list
-  const cities = ['Bengaluru', 'Mysuru', 'Hubballi', 'Mangaluru', 'Belagavi', 'Other'];
+  const cities = ['Bengaluru', 'Hyderabad', 'Mysuru', 'Hubballi', 'Mangaluru', 'Belagavi', 'Other'];
 
   // Income options
   const incomeOptions = ['< 25 L', '25 - 50 L', '50 - 1Cr', '> 1Cr'];
@@ -90,6 +91,9 @@ export default function Calculator() {
   const validateStep1 = () => {
     const err = {};
     if (!formData.name.trim()) err.name = "Name is required";
+    if (formData.city === 'Other' && !formData.otherCity.trim()) {
+      err.otherCity = "City name is required";
+    }
     if (!formData.pincode.trim()) {
       err.pincode = "Pincode is required";
     } else if (!/^\d{6}$/.test(formData.pincode)) {
@@ -173,7 +177,7 @@ export default function Calculator() {
     let msg = `*SB Electricals Solar Setup Inquiry*\n\n`;
     msg += `*Customer Details*:\n`;
     msg += `- Name: ${formData.name}\n`;
-    msg += `- City: ${formData.city}\n`;
+    msg += `- City: ${formData.city === 'Other' ? formData.otherCity : formData.city}\n`;
     msg += `- Pincode: ${formData.pincode}\n`;
     msg += `- Contact: +91 ${formData.mobile}\n\n`;
     msg += `*Rooftop & Bill Profile*:\n`;
@@ -338,6 +342,20 @@ export default function Calculator() {
                         {errors.pincode && <p className="text-[10px] text-red-500 font-bold">{errors.pincode}</p>}
                       </div>
                     </div>
+
+                    {formData.city === 'Other' && (
+                      <div className="space-y-1.5 animate-fade-in">
+                        <label className="text-xs font-extrabold text-slate-700">Enter City Name</label>
+                        <input 
+                          type="text"
+                          placeholder="Enter your city name"
+                          value={formData.otherCity}
+                          onChange={(e) => handleChange('otherCity', e.target.value)}
+                          className={`w-full bg-slate-50 border ${errors.otherCity ? 'border-red-500' : 'border-slate-200'} rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-slate-800 font-bold`}
+                        />
+                        {errors.otherCity && <p className="text-[10px] text-red-500 font-bold">{errors.otherCity}</p>}
+                      </div>
+                    )}
 
                     {/* Mobile Number (Plain input, no OTP check) */}
                     <div className="space-y-1.5">
