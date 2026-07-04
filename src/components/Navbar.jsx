@@ -97,22 +97,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 3. MOBILE SUB-BAR (Call & WhatsApp) - ONLY ON MOBILE/TABLET */}
-        <div className="block lg:hidden bg-emerald-600 text-white py-2.5 text-center text-xs font-bold shadow-inner">
-          <a 
-            href="https://wa.me/918867710294?text=Hello%20SB%20Electricals,%20I%2520am%2520interested%2520in%2520your%2520solar%2520services."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 hover:underline active:scale-[0.99] transition-transform"
-          >
-            <MessageSquare className="h-4 w-4 fill-white text-emerald-600" />
-            <span>Call or WhatsApp | +91 88677 10294</span>
-          </a>
-        </div>
-
         {/* Mobile Drawer menu */}
         <div className={`md:hidden fixed left-0 w-full bg-white z-40 shadow-2xl transition-all duration-300 ease-in-out transform overflow-y-auto ${
-          isOpen ? 'translate-x-0 top-[112px] h-[calc(100vh-112px)]' : 'translate-x-full top-[112px] h-[calc(100vh-112px)]'
+          isOpen ? 'translate-x-0 top-[80px] h-[calc(100vh-80px)]' : 'translate-x-full top-[80px] h-[calc(100vh-80px)]'
         }`}>
           <div className="px-4 pt-6 pb-8 space-y-4 shadow-xl border-t border-slate-100">
             {navLinks.map((link) => (
