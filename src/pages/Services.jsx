@@ -54,11 +54,11 @@ export default function Services() {
       "Detailed performance yield reports post-visit"
     ],
     4: [
-      "Prompt response times for system fault fixing",
-      "Replacement of bypass diodes and MC4 connectors",
-      "Troubleshooting solar generation drops",
-      "Structural repair and mounting realignment",
-      "In-warranty parts replacement coordination"
+      "Smart hybrid inverter installation and configuration",
+      "High-capacity, long-life Lithium battery storage systems",
+      "Seamless grid and battery auto-switchover setup",
+      "Maximize self-consumption and backup during grid outages",
+      "Advanced battery monitoring and management interface"
     ],
     5: [
       "Selection of grid-tied or hybrid smart inverters",
@@ -77,7 +77,7 @@ export default function Services() {
   };
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 bg-white">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-white">
       
       {/* 1. HEADER BANNER */}
       <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200">
@@ -114,9 +114,6 @@ export default function Services() {
                       alt={service.title} 
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     />
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm p-2 rounded-xl text-emerald-600 border border-white/20">
-                      <LucideIcon name={service.icon} className="h-5 w-5" />
-                    </div>
                   </div>
 
                   <div className="space-y-3">

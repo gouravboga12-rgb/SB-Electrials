@@ -2,6 +2,17 @@ import * as Icons from 'lucide-react';
 import { features } from '../data/features';
 import useSEO from '../hooks/useSEO';
 
+import imgExp from '../assets/images/hero_solar.png';
+import imgCert from '../assets/images/solar_maintenance.png';
+import imgPrem from '../assets/images/solar_inverter.png';
+import imgPrice from '../assets/images/commercial_solar.png';
+import imgTime from '../assets/images/residential_solar.png';
+import imgSupport from '../assets/images/service_amc.png';
+import imgAfter from '../assets/images/solar_repair.png';
+import imgEco from '../assets/images/service_residential.png';
+import imgCustom from '../assets/images/service_inverter.png';
+import imgSafety from '../assets/images/service_maintenance.png';
+
 // Dynamic Icon Component helper
 const LucideIcon = ({ name, className }) => {
   const IconComponent = Icons[name];
@@ -22,12 +33,25 @@ export default function WhyChooseUs() {
     { title: "Waterproofing Mounting Seals", desc: "All anchor chemical fasteners are sealed with waterproof compound to eliminate roof leaks." }
   ];
 
+  const featureImages = {
+    1: imgExp,
+    2: imgCert,
+    3: imgPrem,
+    4: imgPrice,
+    5: imgTime,
+    6: imgSupport,
+    7: imgAfter,
+    8: imgEco,
+    9: imgCustom,
+    10: imgSafety
+  };
+
   const whatsappNumber = "918867710294";
   const generalWhatsappMsg = encodeURIComponent("Hello SB Electricals, I am interested in your solar services. Why Choose Us page convinced me to contact you!");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${generalWhatsappMsg}`;
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 bg-white">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-white">
       
       {/* 1. HEADER BANNER */}
       <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200">
@@ -44,29 +68,41 @@ export default function WhyChooseUs() {
         </div>
       </section>
 
-      {/* 2. CORE FEATURES GRID */}
+      {/* 2. CORE FEATURES GRID WITH IMAGES FOR ALL CARDS */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feat, index) => (
-            <div
-              key={feat.id}
-              className="glass-panel p-8 rounded-2xl text-left hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col justify-between bg-white"
-              data-aos="fade-up"
-              data-aos-delay={index * 80}
-            >
-              <div className="space-y-5">
-                <div className="bg-emerald-50 p-3.5 rounded-xl text-emerald-600 inline-block">
-                  <LucideIcon name={feat.icon} className="h-6 w-6" />
+          {features.map((feat, index) => {
+            const featImage = featureImages[feat.id] || imgExp;
+            return (
+              <div
+                key={feat.id}
+                className="glass-panel p-6 rounded-3xl text-left hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col justify-between bg-white border border-slate-200/80 shadow-md"
+                data-aos="fade-up"
+                data-aos-delay={index * 80}
+              >
+                <div className="space-y-4">
+                  {/* Image Header with Overlaid Icon */}
+                  <div className="relative h-36 w-full rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                    <img 
+                      src={featImage} 
+                      alt={feat.title} 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md p-2 rounded-xl text-emerald-600 border border-white/20 shadow-sm">
+                      <LucideIcon name={feat.icon} className="h-4 w-4" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-base font-bold text-slate-900 tracking-tight leading-snug">{feat.title}</h3>
+                  <p className="text-slate-600 text-xs leading-relaxed font-semibold">{feat.description}</p>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 tracking-tight">{feat.title}</h3>
-                <p className="text-slate-600 text-xs leading-relaxed font-medium">{feat.description}</p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* 3. SAFETY STANDARDS SECTION */}
+      {/* 3. SAFETY STANDARDS SECTION WITH EXTRA ACTION IMAGE */}
       <section className="py-24 bg-slate-50/50 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -94,7 +130,7 @@ export default function WhyChooseUs() {
 
             <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-left" data-aos-delay="200">
               {securityMeasures.map((measure, idx) => (
-                <div key={idx} className="glass-panel p-6 rounded-xl text-left space-y-2 bg-white">
+                <div key={idx} className="glass-panel p-6 rounded-xl text-left space-y-2 bg-white border border-slate-200 shadow-sm">
                   <h4 className="text-sm font-bold text-emerald-700">{measure.title}</h4>
                   <p className="text-[11px] text-slate-500 leading-relaxed font-semibold">{measure.desc}</p>
                 </div>
@@ -102,6 +138,16 @@ export default function WhyChooseUs() {
             </div>
 
           </div>
+
+          {/* Action Visual Banner Image */}
+          <div className="mt-16 rounded-[32px] overflow-hidden shadow-2xl border border-slate-200 bg-slate-100" data-aos="zoom-in">
+            <img 
+              src={imgCert} 
+              alt="SB Electricals technician maintaining solar panels" 
+              className="w-full h-[280px] sm:h-[380px] lg:h-[480px] object-cover"
+            />
+          </div>
+
         </div>
       </section>
 

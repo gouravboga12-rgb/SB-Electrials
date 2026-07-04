@@ -20,7 +20,7 @@ export default function FloatingWhatsApp() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 pointer-events-none">
       {/* Tooltip speech bubble */}
       <div 
-        className={`bg-slate-900 text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-800 pointer-events-auto transition-all duration-500 ease-in-out transform flex items-center gap-1 ${
+        className={`relative z-10 bg-slate-900 text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-800 pointer-events-auto transition-all duration-500 ease-in-out transform flex items-center gap-1 ${
           showTooltip 
             ? 'opacity-100 translate-y-0 scale-100' 
             : 'opacity-0 translate-y-2 scale-90 select-none'

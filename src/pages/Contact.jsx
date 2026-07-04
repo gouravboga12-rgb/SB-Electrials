@@ -5,7 +5,7 @@ import useSEO from '../hooks/useSEO';
 export default function Contact() {
   useSEO(
     "Contact Us | SB Electricals - Solar Panel Installations Bengaluru",
-    "Get in touch with SB Electricals in Sunkadakatte, Bengaluru. Request a free quote, schedule a site survey, or call +91 88677 10294 for quick consultation."
+    "Get in touch with SB Electricals in Nagarabhavi, Bengaluru. Request a free quote, schedule a site survey, or call +91 88677 10294 for quick consultation."
   );
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function Contact() {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${contactWhatsappMsg}`;
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 bg-white">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-white">
       
       {/* 1. HEADER BANNER */}
       <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200">
@@ -167,9 +167,9 @@ export default function Contact() {
                 <div>
                   <h4 className="text-sm font-semibold text-slate-500">Office Address</h4>
                   <p className="text-sm font-bold text-slate-800 leading-relaxed">
-                    XFWQ+8WQ, Venkateshwara Layout,<br />
-                    Sunkadakatte, Bengaluru,<br />
-                    Karnataka - 560091
+                    Ground Floor 183/1 Madhura Nagar,<br />
+                    2nd main Moodalpalya Nagarbhavi Stage 2,<br />
+                    Bengaluru, Bengaluru Urban - 560072
                   </p>
                 </div>
               </div>
@@ -337,7 +337,7 @@ export default function Contact() {
         <div className="glass-panel p-2 rounded-2xl shadow-xl relative overflow-hidden h-[400px] bg-white">
           <iframe 
             title="SB Electricals Location Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.5255476694666!2d77.502805!3d12.980644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3d87b322a31f%3A0x6b8c9d2f2d93e8!2sSunkadakatte%252C%2520Bengaluru%252C%2520Karnataka%2520560091!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+            src="https://maps.google.com/maps?q=Ground%20Floor%20183/1%20Madhura%20Nagar%202nd%20main%20Moodalpalya%20Nagarbhavi%20Stage%202%20Bengaluru%20Bengaluru%20Urban-560072&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%" 
             height="100%" 
             style={{ border: 0, borderRadius: '14px' }} 

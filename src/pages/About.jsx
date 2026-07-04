@@ -1,6 +1,9 @@
 import { Award, ShieldCheck, HardHat, HeartHandshake, Eye, Target, CheckSquare } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 
+import residentialSolarImg from '../assets/images/residential_solar.png';
+import commercialSolarImg from '../assets/images/commercial_solar.png';
+
 export default function About() {
   useSEO(
     "About Us | SB Electricals - Trusted Solar Energy Contractors in Bengaluru",
@@ -45,7 +48,7 @@ export default function About() {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${aboutWhatsappMsg}`;
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 bg-white">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-white">
       
       {/* 1. HEADER HERO BANNER */}
       <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200">
@@ -63,10 +66,10 @@ export default function About() {
       </section>
 
       {/* 2. COMPANY JOURNEY */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-100">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
-          <div className="lg:col-span-7 text-left space-y-6" data-aos="fade-right">
+          <div className="lg:col-span-6 text-left space-y-6" data-aos="fade-right">
             <h2 className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Our Journey</h2>
             <h3 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight">
               6+ Years of Electrical & Solar Innovation
@@ -79,8 +82,27 @@ export default function About() {
             </p>
           </div>
 
-          <div className="lg:col-span-5" data-aos="fade-left">
-            <div className="glass-panel p-8 md:p-10 rounded-2xl text-left space-y-6 relative overflow-hidden bg-white">
+          <div className="lg:col-span-6" data-aos="fade-left">
+            <div className="rounded-[32px] overflow-hidden shadow-2xl border border-slate-200 bg-slate-100 relative">
+              <img 
+                src={residentialSolarImg} 
+                alt="SB Electricals Residential Solar Panels Installation" 
+                className="w-full h-[400px] object-cover"
+              />
+              <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl border border-white/20 text-left">
+                <span className="text-3xl font-black text-emerald-600">6+</span>
+                <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider block">Years of Quality Service</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Section 2b: Trust Strengths Card + Commercial Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-20">
+          
+          <div className="lg:col-span-6 lg:order-2" data-aos="fade-left">
+            <div className="glass-panel p-8 md:p-10 rounded-[32px] text-left space-y-6 relative overflow-hidden bg-white border border-slate-200/80 shadow-md">
               <div className="absolute top-0 right-0 -mt-6 -mr-6 w-20 h-20 bg-emerald-600/5 rounded-full blur-xl"></div>
               
               <h4 className="text-xl font-bold text-slate-900">Why Customers Trust Us</h4>
@@ -93,6 +115,16 @@ export default function About() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 lg:order-1" data-aos="fade-right">
+            <div className="rounded-[32px] overflow-hidden shadow-2xl border border-slate-200 bg-slate-100">
+              <img 
+                src={commercialSolarImg} 
+                alt="SB Electricals Commercial Solar Installation" 
+                className="w-full h-[360px] object-cover"
+              />
             </div>
           </div>
 

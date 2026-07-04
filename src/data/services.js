@@ -32,11 +32,11 @@ export const services = [
   },
   {
     id: 4,
-    title: "Solar Panel Repair",
-    description: "Experiencing drop-offs in output? We diagnose and fix broken panels, grid connection faults, and inverter warnings.",
-    icon: "Wrench",
+    title: "Solar Hybrid Solutions & Lithium Batteries",
+    description: "And we deal into solar hybrid solutions also with lithium battery.",
+    icon: "BatteryCharging",
     image: imgRep,
-    ctaMessage: "Hello SB Electricals, I am facing an issue with my solar setup and need to request panel repair services."
+    ctaMessage: "Hello SB Electricals, I am interested in your solar hybrid solutions with lithium battery storage."
   },
   {
     id: 5,
