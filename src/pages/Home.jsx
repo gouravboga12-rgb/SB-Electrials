@@ -190,6 +190,150 @@ export default function Home() {
   const whatsappNumber = "918867710294";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hello SB Electricals, I am visiting your website and would like a free consultation.")}`;
 
+  // ----------------------------------------------------
+  // Home Page Solar Calculator State & Handlers
+  // ----------------------------------------------------
+  const [calcStep, setCalcStep] = useState(1);
+  const [calcFormData, setCalcFormData] = useState({
+    name: '',
+    city: 'Bengaluru',
+    otherCity: '',
+    pincode: '',
+    mobile: '',
+    monthlyBill: 3000,
+    billFile: null,
+    income: '25 - 50 L',
+    familyMembers: '3-5',
+    bedrooms: '3',
+    appliances: {
+      ac: 0,
+      geyser: 0,
+      ev2w: 0,
+      ev4w: 'Don\'t Have',
+      heater: 0,
+      cooler: 0,
+      pump: 'Don\'t Have',
+    }
+  });
+  const [calcErrors, setCalcErrors] = useState({});
+
+  const calcCities = ['Bengaluru', 'Hyderabad', 'Mysuru', 'Hubballi', 'Mangaluru', 'Belagavi', 'Other'];
+  const calcIncomeOptions = ['< 25 L', '25 - 50 L', '50 - 1Cr', '> 1Cr'];
+  const calcFamilyOptions = ['1-2', '3-5', '5-7', '7+'];
+  const calcBedroomOptions = ['1', '2', '3', '4', '> 4'];
+
+  const handleCalcChange = (field, val) => {
+    setCalcFormData(prev => ({ ...prev, [field]: val }));
+    if (calcErrors[field]) {
+      setCalcErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const updateCalcAppliance = (app, delta) => {
+    setCalcFormData(prev => {
+      const current = prev.appliances[app];
+      return {
+        ...prev,
+        appliances: { ...prev.appliances, [app]: Math.max(0, current + delta) }
+      };
+    });
+  };
+
+  const selectCalcAppliance = (app, val) => {
+    setCalcFormData(prev => ({
+      ...prev,
+      appliances: { ...prev.appliances, [app]: val }
+    }));
+  };
+
+  const validateCalcStep1 = () => {
+    const err = {};
+    if (!calcFormData.name.trim()) err.name = "Name is required";
+    if (calcFormData.city === 'Other' && !calcFormData.otherCity.trim()) {
+      err.otherCity = "City name is required";
+    }
+    if (!calcFormData.pincode.trim()) {
+      err.pincode = "Pincode is required";
+    } else if (!/^\d{6}$/.test(calcFormData.pincode)) {
+      err.pincode = "Invalid 6-digit Pincode";
+    }
+    if (!calcFormData.mobile.trim()) {
+      err.mobile = "Mobile number is required";
+    } else if (!/^\d{10}$/.test(calcFormData.mobile)) {
+      err.mobile = "Invalid 10-digit Mobile number";
+    }
+    setCalcErrors(err);
+    return Object.keys(err).length === 0;
+  };
+
+  const nextCalcStep = () => {
+    if (calcStep === 1) {
+      if (validateCalcStep1()) setCalcStep(2);
+    } else if (calcStep < 5) {
+      setCalcStep(prev => prev + 1);
+    }
+  };
+
+  const prevCalcStep = () => {
+    if (calcStep > 1) setCalcStep(prev => prev - 1);
+  };
+
+  // ----------------------------------------------------
+  // Home Page Solar Calculations
+  // ----------------------------------------------------
+  const billVal = parseFloat(calcFormData.monthlyBill) || 0;
+  const finalCapacity = Math.min(15, Math.max(1, Math.round((billVal / 1200) * 10) / 10));
+  const areaRequired = Math.round(finalCapacity * 100);
+  const grossMin = finalCapacity * 60000;
+  const grossMax = finalCapacity * 70000;
+  const averageGross = (grossMin + grossMax) / 2;
+
+  let subsidy = 0;
+  if (finalCapacity <= 1) {
+    subsidy = finalCapacity * 30000;
+  } else if (finalCapacity <= 2) {
+    subsidy = 30000 + (finalCapacity - 1) * 30000;
+  } else if (finalCapacity <= 3) {
+    subsidy = 60000 + (finalCapacity - 2) * 18000;
+  } else {
+    subsidy = 78000;
+  }
+  const finalSubsidy = Math.min(subsidy, grossMin * 0.9);
+  const netMin = Math.max(12000, Math.round(grossMin - finalSubsidy));
+  const netMax = Math.max(18000, Math.round(grossMax - finalSubsidy));
+  const averageNet = (netMin + netMax) / 2;
+  const annualSavings = Math.round(billVal * 0.85 * 12);
+  const paybackPeriod = annualSavings > 0 ? (averageNet / annualSavings).toFixed(1) : '3.5';
+  const co2Offset = (finalCapacity * 1.2).toFixed(1);
+  const treesPlanted = Math.round(finalCapacity * 30);
+
+  const buildWhatsAppMessage = () => {
+    let msg = `*SB Electricals Home Solar Setup Inquiry*\n\n`;
+    msg += `*Customer Details*:\n`;
+    msg += `- Name: ${calcFormData.name}\n`;
+    msg += `- City: ${calcFormData.city === 'Other' ? calcFormData.otherCity : calcFormData.city}\n`;
+    msg += `- Pincode: ${calcFormData.pincode}\n`;
+    msg += `- Contact: +91 ${calcFormData.mobile}\n\n`;
+    msg += `*Rooftop & Bill Profile*:\n`;
+    msg += `- Monthly Bill: ₹${calcFormData.monthlyBill}\n`;
+    msg += `- Income Range: ${calcFormData.income}\n`;
+    msg += `- Family Size: ${calcFormData.familyMembers} members\n`;
+    msg += `- Bedrooms: ${calcFormData.bedrooms}\n\n`;
+    msg += `*Appliance Load*:\n`;
+    msg += `- ACs: ${calcFormData.appliances.ac}, Geysers: ${calcFormData.appliances.geyser}\n`;
+    msg += `- EVs: 2W (${calcFormData.appliances.ev2w}), 4W (${calcFormData.appliances.ev4w})\n\n`;
+    msg += `*Estimated Solar Recommendation*:\n`;
+    msg += `- Recommended System: *${finalCapacity} kW*\n`;
+    msg += `- Required Area: ~${areaRequired} sq.ft.\n`;
+    msg += `- Estimated Price: *₹${netMin.toLocaleString('en-IN')} - ₹${netMax.toLocaleString('en-IN')}* (after Govt Subsidy of ₹${finalSubsidy.toLocaleString('en-IN')})\n`;
+    msg += `- Approx. Annual Savings: *₹${annualSavings.toLocaleString('en-IN')}*\n`;
+    msg += `- Estimated Payback: *${paybackPeriod} years*\n\n`;
+    msg += `Please contact me to schedule a technical site survey!`;
+    return encodeURIComponent(msg);
+  };
+
+  const whatsappUrlHomeCalc = `https://wa.me/918867710294?text=${buildWhatsAppMessage()}`;
+
   return (
     <div className="relative overflow-hidden min-h-screen bg-white pt-24 lg:pt-24">
       
@@ -274,118 +418,466 @@ export default function Home() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. CONSULTATION FORM SECTION (OVERLAY) */}
+      {/* 2. DYNAMIC CALCULATOR SECTION */}
       {/* ========================================================================= */}
       <section id="consultation-form" className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 lg:-mt-20">
         <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 md:p-8 lg:p-10 text-left">
           
-          {submitStatus === 'success' && (
-            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-start gap-3 mb-6">
-              <Icons.CheckCircle className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-sm font-bold text-slate-900">Request Sent Successfully!</h4>
-                <p className="text-xs text-slate-600 mt-0.5 font-medium">
-                  We have loaded your request and redirected you to WhatsApp. An engineer will also reach out to you within 24 hours.
-                </p>
+          {/* Step Indicator Header (Desktop) */}
+          <div className="hidden md:flex justify-between items-center mb-10 bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-inner">
+            {[
+              { stepNum: 1, label: "Contact" },
+              { stepNum: 2, label: "Usage" },
+              { stepNum: 3, label: "Household" },
+              { stepNum: 4, label: "Load" },
+              { stepNum: 5, label: "Summary" }
+            ].map((s, idx) => (
+              <div 
+                key={idx}
+                className={`flex-grow text-center py-3.5 font-extrabold text-[10px] uppercase tracking-wider transition-all duration-300 relative ${
+                  calcStep === s.stepNum 
+                    ? 'bg-slate-900 text-white font-black'
+                    : calcStep > s.stepNum
+                      ? 'bg-emerald-50 text-emerald-700 border-r border-slate-100'
+                      : 'text-slate-400 border-r border-slate-100 bg-white'
+                }`}
+              >
+                {s.stepNum}. {s.label}
               </div>
-            </div>
-          )}
+            ))}
+          </div>
 
-          {submitStatus === 'error' && (
-            <div className="bg-red-50 border border-red-200 p-4 rounded-2xl flex items-start gap-3 mb-6">
-              <Icons.AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-sm font-bold text-slate-900">Incomplete Fields</h4>
-                <p className="text-xs text-slate-600 mt-0.5 font-medium">
-                  Please make sure all form elements are filled out before submitting.
-                </p>
-              </div>
+          {/* Step Indicator Header (Mobile) */}
+          <div className="flex md:hidden justify-between items-center mb-6 bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-inner">
+            <button 
+              onClick={prevCalcStep}
+              disabled={calcStep === 1}
+              className="p-1 text-slate-500 disabled:opacity-30 cursor-pointer animate-pulse"
+            >
+              <Icons.ChevronLeft className="h-5 w-5" />
+            </button>
+            <div className="text-xs font-black text-slate-800 uppercase tracking-wider">
+              Step {calcStep} of 5: {
+                calcStep === 1 ? "Contact Details" :
+                calcStep === 2 ? "Electricity Usage" :
+                calcStep === 3 ? "Household Details" :
+                calcStep === 4 ? "Appliance Load" : "Result Summary"
+              }
             </div>
-          )}
+            <div className="w-5 h-5"></div>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left label description */}
-            <div className="lg:col-span-3 space-y-2">
-              <h3 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">
-                Get Your <span className="text-emerald-600">Free</span> <br />Solar Consultation
-              </h3>
-              <p className="text-slate-500 text-xs font-semibold leading-relaxed">
-                Save more on electricity bills. Get a free site inspection & quotation today!
-              </p>
-            </div>
-            
-            {/* Form Inputs Grid */}
-            <div className="lg:col-span-9 w-full">
-              <form onSubmit={handleFormSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-                <div className="space-y-1 text-left">
-                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Your Name</label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-colors"
-                  />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {calcStep === 1 && (
+              <>
+                <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
+                  <h3 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight leading-tight">
+                    Design Your <span className="text-emerald-600">Rooftop</span> <br />Solar Setup
+                  </h3>
+                  <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+                    Estimate your recommended solar capacity, Govt subsidy, net cost, and yearly electricity savings instantly.
+                  </p>
+                  <div className="space-y-2 pt-2 text-[10px] font-extrabold text-emerald-600">
+                    <div className="flex items-center gap-2">
+                      <Icons.CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>MNRE Approved Vendor</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icons.CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>30-Year Performance Warranty</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="space-y-1 text-left">
-                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="Phone Number"
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-colors"
-                  />
+
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Your Name</label>
+                      <input
+                        type="text"
+                        placeholder="Enter name"
+                        value={calcFormData.name}
+                        onChange={(e) => handleCalcChange('name', e.target.value)}
+                        className={`w-full bg-slate-50 border ${calcErrors.name ? 'border-red-500' : 'border-slate-200'} rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600`}
+                      />
+                      {calcErrors.name && <p className="text-[9px] text-red-500 font-bold">{calcErrors.name}</p>}
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Mobile Number</label>
+                      <input
+                        type="text"
+                        maxLength="10"
+                        placeholder="10-digit number"
+                        value={calcFormData.mobile}
+                        onChange={(e) => handleCalcChange('mobile', e.target.value.replace(/\D/g, ''))}
+                        className={`w-full bg-slate-50 border ${calcErrors.mobile ? 'border-red-500' : 'border-slate-200'} rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600`}
+                      />
+                      {calcErrors.mobile && <p className="text-[9px] text-red-500 font-bold">{calcErrors.mobile}</p>}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">City</label>
+                      <select
+                        value={calcFormData.city}
+                        onChange={(e) => handleCalcChange('city', e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600 cursor-pointer"
+                      >
+                        {calcCities.map((c, idx) => (
+                          <option key={idx} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Pincode</label>
+                      <input
+                        type="text"
+                        maxLength="6"
+                        placeholder="6-digit pincode"
+                        value={calcFormData.pincode}
+                        onChange={(e) => handleCalcChange('pincode', e.target.value.replace(/\D/g, ''))}
+                        className={`w-full bg-slate-50 border ${calcErrors.pincode ? 'border-red-500' : 'border-slate-200'} rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600`}
+                      />
+                      {calcErrors.pincode && <p className="text-[9px] text-red-500 font-bold">{calcErrors.pincode}</p>}
+                    </div>
+                  </div>
+
+                  {calcFormData.city === 'Other' && (
+                    <div className="space-y-1 animate-fade-in">
+                      <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Enter City Name</label>
+                      <input 
+                        type="text"
+                        placeholder="Enter your city name"
+                        value={calcFormData.otherCity}
+                        onChange={(e) => handleCalcChange('otherCity', e.target.value)}
+                        className={`w-full bg-slate-50 border ${calcErrors.otherCity ? 'border-red-500' : 'border-slate-200'} rounded-xl px-4 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600`}
+                      />
+                      {calcErrors.otherCity && <p className="text-[9px] text-red-500 font-bold">{calcErrors.otherCity}</p>}
+                    </div>
+                  )}
+
+                  <div className="pt-2 text-right">
+                    <button
+                      onClick={nextCalcStep}
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-8 py-3.5 rounded-xl shadow-md cursor-pointer transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
-                <div className="space-y-1 text-left">
-                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Email Address</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email Address"
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 transition-colors"
-                  />
+              </>
+            )}
+
+            {calcStep === 2 && (
+              <>
+                <div className="lg:col-span-4 flex flex-col justify-center space-y-3">
+                  <button onClick={prevCalcStep} className="inline-flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-extrabold mb-2 cursor-pointer">
+                    <Icons.ArrowLeft className="h-4 w-4" />
+                    <span>Back</span>
+                  </button>
+                  <h3 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Electricity Bill</h3>
+                  <p className="text-slate-500 text-xs font-semibold leading-relaxed">Let's check your last month's bill details to calculate the sizing and cost payback period.</p>
                 </div>
-                <div className="space-y-1 text-left">
-                  <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Select Service</label>
-                  <select
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-semibold text-slate-800 focus:outline-none focus:border-emerald-600 transition-colors cursor-pointer"
+
+                <div className="lg:col-span-8 space-y-6">
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-extrabold text-slate-700">Last Monthly Bill Amount</span>
+                      <div className="bg-white border border-slate-200 px-3 py-1.5 rounded-xl text-emerald-700 font-black text-xs flex items-center gap-1">
+                        <span>₹</span>
+                        <input 
+                          type="number"
+                          value={calcFormData.monthlyBill}
+                          onChange={(e) => handleCalcChange('monthlyBill', Math.max(0, parseInt(e.target.value) || 0))}
+                          className="w-16 bg-transparent text-right focus:outline-none font-black"
+                        />
+                      </div>
+                    </div>
+                    <input 
+                      type="range"
+                      min="500"
+                      max="50000"
+                      step="250"
+                      value={calcFormData.monthlyBill}
+                      onChange={(e) => handleCalcChange('monthlyBill', parseInt(e.target.value))}
+                      className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                    />
+                    <div className="flex justify-between text-[9px] text-slate-400 font-extrabold">
+                      <span>₹500</span>
+                      <span>₹50,000+</span>
+                    </div>
+                  </div>
+
+                  <div className="border border-slate-100 rounded-2xl p-4 text-center bg-slate-50/50">
+                    <p className="text-[10px] text-slate-400 font-bold">Have a copy of the bill? You can upload it during site surveys.</p>
+                  </div>
+
+                  <div className="pt-2 text-right">
+                    <button
+                      onClick={nextCalcStep}
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-8 py-3.5 rounded-xl shadow-md cursor-pointer transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {calcStep === 3 && (
+              <>
+                <div className="lg:col-span-4 flex flex-col justify-center space-y-3">
+                  <button onClick={prevCalcStep} className="inline-flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-extrabold mb-2 cursor-pointer">
+                    <Icons.ArrowLeft className="h-4 w-4" />
+                    <span>Back</span>
+                  </button>
+                  <h3 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Household Sizing</h3>
+                  <p className="text-slate-500 text-xs font-semibold leading-relaxed">Helps us evaluate load configurations for household members and roof structural dimensions.</p>
+                </div>
+
+                <div className="lg:col-span-8 space-y-5">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Annual Household Income</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {calcIncomeOptions.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => handleCalcChange('income', opt)}
+                          className={`py-2 px-3 text-[10px] font-bold rounded-lg border text-center transition-all cursor-pointer ${
+                            calcFormData.income === opt
+                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Family Members</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {calcFamilyOptions.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => handleCalcChange('familyMembers', opt)}
+                          className={`py-2 px-3 text-[10px] font-bold rounded-lg border text-center transition-all cursor-pointer ${
+                            calcFormData.familyMembers === opt
+                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Bedrooms</label>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                      {calcBedroomOptions.map((opt) => (
+                        <button
+                          key={opt}
+                          onClick={() => handleCalcChange('bedrooms', opt)}
+                          className={`py-2 px-3 text-[10px] font-bold rounded-lg border text-center transition-all cursor-pointer ${
+                            calcFormData.bedrooms === opt
+                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                              : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-2 text-right">
+                    <button
+                      onClick={nextCalcStep}
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-8 py-3.5 rounded-xl shadow-md cursor-pointer transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {calcStep === 4 && (
+              <>
+                <div className="lg:col-span-4 flex flex-col justify-center space-y-3">
+                  <button onClick={prevCalcStep} className="inline-flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-extrabold mb-2 cursor-pointer">
+                    <Icons.ArrowLeft className="h-4 w-4" />
+                    <span>Back</span>
+                  </button>
+                  <h3 className="text-xl lg:text-2xl font-black text-slate-900 tracking-tight">Appliance Load</h3>
+                  <p className="text-slate-500 text-xs font-semibold leading-relaxed">Specify heavy appliances to help us estimate peak load and switchover requirements.</p>
+                </div>
+
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-center justify-between bg-slate-50 border border-slate-200/60 px-4 py-2.5 rounded-xl">
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-800">Air Conditioner</h4>
+                        <p className="text-[9px] text-slate-400 font-bold">1.5 Ton splits</p>
+                      </div>
+                      <div className="flex items-center gap-2.5">
+                        <button onClick={() => updateCalcAppliance('ac', -1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">-</button>
+                        <span className="text-xs font-black text-slate-800 w-4 text-center">{calcFormData.appliances.ac}</span>
+                        <button onClick={() => updateCalcAppliance('ac', 1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">+</button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-slate-50 border border-slate-200/60 px-4 py-2.5 rounded-xl">
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-800">Water Geyser</h4>
+                        <p className="text-[9px] text-slate-400 font-bold">Bathrooms geysers</p>
+                      </div>
+                      <div className="flex items-center gap-2.5">
+                        <button onClick={() => updateCalcAppliance('geyser', -1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">-</button>
+                        <span className="text-xs font-black text-slate-800 w-4 text-center">{calcFormData.appliances.geyser}</span>
+                        <button onClick={() => updateCalcAppliance('geyser', 1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">+</button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-slate-50 border border-slate-200/60 px-4 py-2.5 rounded-xl">
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-800">EV 2-Wheeler</h4>
+                        <p className="text-[9px] text-slate-400 font-bold">Scooter chargers</p>
+                      </div>
+                      <div className="flex items-center gap-2.5">
+                        <button onClick={() => updateCalcAppliance('ev2w', -1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">-</button>
+                        <span className="text-xs font-black text-slate-800 w-4 text-center">{calcFormData.appliances.ev2w}</span>
+                        <button onClick={() => updateCalcAppliance('ev2w', 1)} className="w-7 h-7 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center font-bold text-xs cursor-pointer">+</button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between bg-slate-50 border border-slate-200/60 px-4 py-2.5 rounded-xl">
+                      <div>
+                        <h4 className="text-xs font-bold text-slate-800">EV 4-Wheeler</h4>
+                        <p className="text-[9px] text-slate-400 font-bold">Car chargers</p>
+                      </div>
+                      <select
+                        value={calcFormData.appliances.ev4w}
+                        onChange={(e) => selectCalcAppliance('ev4w', e.target.value)}
+                        className="bg-white border border-slate-300 rounded-lg px-2 py-1 text-[10px] text-slate-700 font-bold focus:outline-none cursor-pointer"
+                      >
+                        <option value="Don't Have">Don't Have</option>
+                        <option value="1 Car">1 Car</option>
+                        <option value="2 Cars">2 Cars</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 text-right">
+                    <button
+                      onClick={nextCalcStep}
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-8 py-3.5 rounded-xl shadow-md cursor-pointer transition-colors"
+                    >
+                      Calculate Solar Setup
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {calcStep === 5 && (
+              <div className="lg:col-span-12 space-y-6">
+                <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+                  <button onClick={prevCalcStep} className="inline-flex items-center gap-1.5 text-xs text-emerald-600 hover:text-emerald-700 font-extrabold cursor-pointer">
+                    <Icons.ArrowLeft className="h-4 w-4" />
+                    <span>Back to Load</span>
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setCalcStep(1);
+                      setCalcFormData({
+                        name: '',
+                        city: 'Bengaluru',
+                        otherCity: '',
+                        pincode: '',
+                        mobile: '',
+                        monthlyBill: 3000,
+                        billFile: null,
+                        income: '25 - 50 L',
+                        familyMembers: '3-5',
+                        bedrooms: '3',
+                        appliances: { ac: 0, geyser: 0, ev2w: 0, ev4w: 'Don\'t Have', heater: 0, cooler: 0, pump: 'Don\'t Have' }
+                      });
+                    }}
+                    className="text-xs font-bold text-slate-400 hover:text-slate-900 transition-colors cursor-pointer"
                   >
-                    <option value="" disabled>Select Service</option>
-                    {servicesDropdown.map((option, idx) => (
-                      <option key={idx} value={option}>{option}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="w-full">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-400 text-white font-extrabold text-xs py-3.5 rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] h-[46px]"
-                  >
-                    <span>{isSubmitting ? 'Sending...' : 'Get Free Quote'}</span>
+                    Reset
                   </button>
                 </div>
-                <div className="sm:col-span-2 lg:col-span-5 flex items-center gap-1.5 text-[10px] text-slate-400 font-bold justify-start pt-1">
-                  <Icons.ShieldAlert className="h-3.5 w-3.5 text-emerald-600" />
-                  <span>100% Secure. No Spam. Instant Response.</span>
-                </div>
-              </form>
-            </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-150 text-center space-y-1">
+                    <Icons.Cpu className="h-6 w-6 text-emerald-600 mx-auto" />
+                    <h4 className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Recommended Setup</h4>
+                    <p className="text-2xl font-black text-slate-900">{finalCapacity} kW</p>
+                  </div>
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-150 text-center space-y-1">
+                    <Icons.Grid className="h-6 w-6 text-emerald-600 mx-auto" />
+                    <h4 className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Required Roof Space</h4>
+                    <p className="text-2xl font-black text-slate-900">~{areaRequired} sq.ft</p>
+                  </div>
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-150 text-center space-y-1">
+                    <Icons.BadgePercent className="h-6 w-6 text-emerald-600 mx-auto" />
+                    <h4 className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Govt. Subsidy</h4>
+                    <p className="text-2xl font-black text-slate-900">₹{finalSubsidy.toLocaleString('en-IN')}</p>
+                  </div>
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-150 text-center space-y-1">
+                    <Icons.Clock className="h-6 w-6 text-emerald-600 mx-auto" />
+                    <h4 className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Payback Period</h4>
+                    <p className="text-2xl font-black text-slate-900">~{paybackPeriod} Years</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-150">
+                  <div className="space-y-4 text-left">
+                    <h4 className="text-sm font-bold text-slate-800">Financial Summary</h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between font-semibold text-slate-500">
+                        <span>Average Gross Setup Cost</span>
+                        <span>₹{grossMin.toLocaleString('en-IN')} - ₹{grossMax.toLocaleString('en-IN')}</span>
+                      </div>
+                      <div className="flex justify-between font-semibold text-emerald-600">
+                        <span>Govt Subsidy (PM Surya Ghar)</span>
+                        <span>- ₹{finalSubsidy.toLocaleString('en-IN')}</span>
+                      </div>
+                      <div className="flex justify-between font-black text-slate-900 border-t border-slate-200 pt-2 text-sm">
+                        <span>Net Investment Cost Range</span>
+                        <span>₹{netMin.toLocaleString('en-IN')} - ₹{netMax.toLocaleString('en-IN')}*</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col justify-between space-y-4 text-left">
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-bold text-slate-800">Lock in your Savings</h4>
+                      <p className="text-[10px] font-semibold text-slate-500 leading-relaxed">Click the button below to send your load configurations directly to our engineering desk via WhatsApp to schedule a site validation check.</p>
+                    </div>
+                    <a
+                      href={whatsappUrlHomeCalc}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs py-3.5 rounded-xl inline-flex items-center justify-center gap-2 shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 cursor-pointer"
+                    >
+                      <Icons.MessageCircle className="h-4.5 w-4.5" />
+                      <span>Send Setup Configurations via WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
+
         </div>
       </section>
 
