@@ -29,6 +29,7 @@ export default function Navbar() {
     { name: 'About Us', path: '/about' },
     { name: 'Services', path: '/services' },
     { name: 'Why Choose Us', path: '/why-choose-us' },
+    { name: 'Calculator', path: '/calculator' },
     { name: 'Contact Us', path: '/contact' }
   ];
 
