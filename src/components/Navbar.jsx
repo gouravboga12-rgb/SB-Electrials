@@ -42,13 +42,13 @@ export default function Navbar() {
           : 'bg-white/95 backdrop-blur-md border-b border-slate-100 py-3'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-28">
             {/* Logo Section */}
             <Link to="/" className="flex items-center group">
               <img 
                 src={logoImg} 
                 alt="SB Electricals Logo" 
-                className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
+                className="h-28 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" 
               />
             </Link>
 

@@ -380,7 +380,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative overflow-hidden min-h-screen bg-white pt-24 lg:pt-24">
+    <div className="relative overflow-hidden min-h-screen bg-white pt-32 lg:pt-32">
       
       {/* ========================================================================= */}
       {/* 1. HERO SECTION */}

@@ -46,7 +46,7 @@ export default function Footer() {
               <img 
                 src={logoImg} 
                 alt="SB Electricals Logo" 
-                className="h-20 w-auto object-contain brightness-110 filter hover:opacity-90" 
+                className="h-28 w-auto object-contain brightness-110 filter hover:opacity-90" 
               />
             </Link>
             <p className="text-xs leading-relaxed text-slate-400">

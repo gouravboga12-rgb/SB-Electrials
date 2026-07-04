@@ -201,7 +201,7 @@ export default function Calculator() {
   const whatsappUrl = `https://wa.me/918867710294?text=${buildWhatsAppMessage()}`;
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-slate-50">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-32 lg:pt-36 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         
         {/* Step Indicator Header (Desktop) */}

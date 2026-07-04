@@ -51,7 +51,7 @@ export default function WhyChooseUs() {
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${generalWhatsappMsg}`;
 
   return (
-    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-24 lg:pt-28 bg-white">
+    <div className="relative overflow-hidden radial-glow-green min-h-screen pt-32 lg:pt-36 bg-white">
       
       {/* 1. HEADER BANNER */}
       <section className="relative py-20 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200">
