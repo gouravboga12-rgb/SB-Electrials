@@ -13,6 +13,7 @@ import Services from './pages/Services';
 import WhyChooseUs from './pages/WhyChooseUs';
 import Contact from './pages/Contact';
 import Calculator from './pages/Calculator';
+import Gallery from './pages/Gallery';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -39,6 +40,7 @@ function App() {
               <Route path="/why-choose-us" element={<WhyChooseUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/calculator" element={<Calculator />} />
+              <Route path="/gallery" element={<Gallery />} />
             </Routes>
           </main>
           

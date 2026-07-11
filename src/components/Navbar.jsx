@@ -30,6 +30,7 @@ export default function Navbar() {
     { name: 'Services', path: '/services' },
     { name: 'Why Choose Us', path: '/why-choose-us' },
     { name: 'Calculator', path: '/calculator' },
+    { name: 'Gallery', path: '/gallery' },
     { name: 'Contact Us', path: '/contact' }
   ];
 
