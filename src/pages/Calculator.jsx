@@ -187,53 +187,7 @@ export default function Calculator() {
 
         </div>
 
-        {/* Pricing Guide Section */}
-        <div className="mt-16 bg-white rounded-3xl border border-slate-250 shadow-md p-6 md:p-8 text-left space-y-6">
-          <h3 className="text-xl font-extrabold text-slate-900">
-            About Our Setup Calculation Methodology
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-slate-650 font-medium">
-            <div className="space-y-3">
-              <p className="font-semibold text-slate-800">1. Required Capacity Logic:</p>
-              <p>
-                Solar installation guidelines state that monthly power generation of a system is roughly 120 units per kW of system capacity (i.e. 4 units a day per kW).
-              </p>
-              <p>
-                Capacity calculation is performed as:
-                <br />
-                <code className="bg-slate-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-xs">
-                  Capacity (kW) = Monthly Consumption (Units) / 120
-                </code>
-              </p>
-            </div>
-            <div className="space-y-3">
-              <p className="font-semibold text-slate-800">2. Setup Cost Sizing:</p>
-              <p>
-                Standard premium MNRE-compliant residential grid installations in Bengaluru cost roughly ₹70,000 per kW on a gross basis.
-              </p>
-              <p>
-                Setup cost estimation is performed as:
-                <br />
-                <code className="bg-slate-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-xs">
-                  Estimated Cost (₹) = Capacity (kW) * 70,000
-                </code>
-              </p>
-            </div>
-            <div className="space-y-3">
-              <p className="font-semibold text-slate-800">3. Electricity Charges Logic:</p>
-              <p>
-                Electricity bills are calculated assuming a standard residential BESCOM tariff average of ₹8 per unit (inclusive of fixed charges and energy taxes).
-              </p>
-              <p>
-                Charges estimation is performed as:
-                <br />
-                <code className="bg-slate-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-xs">
-                  Charges (₹) = Consumption (Units) * 8
-                </code>
-              </p>
-            </div>
-          </div>
-        </div>
+
 
       </div>
     </div>
