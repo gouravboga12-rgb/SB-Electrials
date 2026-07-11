@@ -13,6 +13,12 @@ import solarMaintImg from '../assets/images/solar_maintenance.png';
 import solarInverterImg from '../assets/images/solar_inverter.png';
 import solarRepairImg from '../assets/images/solar_repair.png';
 
+// Gallery Preview Images
+import galleryImg9 from '../assets/images/gallery/gallery_9.png';
+import galleryImg10 from '../assets/images/gallery/gallery_10.png';
+import galleryImg11 from '../assets/images/gallery/gallery_11.png';
+import galleryImg12 from '../assets/images/gallery/gallery_12.png';
+
 // Dynamic Icon Component helper
 const LucideIcon = ({ name, className }) => {
   const IconComponent = Icons[name];
@@ -724,6 +730,60 @@ export default function Home() {
             className="group inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
           >
             <span>View All Services</span>
+            <Icons.ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5.5. GALLERY PREVIEW SECTION */}
+      {/* ========================================================================= */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-100">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4" data-aos="fade-down">
+          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full text-emerald-700 text-xs font-bold uppercase tracking-wider">
+            Our Work
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Installation Showcase
+          </h2>
+          <p className="text-slate-500 text-sm max-w-xl mx-auto leading-relaxed">
+            Take a look at a few of our completed rooftop solar installations across Bengaluru.
+          </p>
+        </div>
+
+        {/* 4-Image Grid Preview */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { src: galleryImg9, alt: 'Solar Panel Installation' },
+            { src: galleryImg10, alt: 'Rooftop Solar Setup' },
+            { src: galleryImg11, alt: 'Residential Solar Installation' },
+            { src: galleryImg12, alt: 'Commercial Solar Array' }
+          ].map((img, idx) => (
+            <div 
+              key={idx} 
+              className="relative group rounded-2xl overflow-hidden shadow-md border border-slate-150 aspect-[4/3] bg-slate-50 cursor-pointer"
+              data-aos="zoom-in"
+              data-aos-delay={idx * 80}
+            >
+              <img 
+                src={img.src} 
+                alt={img.alt} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <span className="text-white text-xs font-bold">{img.alt}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="mt-12 text-center" data-aos="fade-up">
+          <Link
+            to="/gallery"
+            className="group inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+          >
+            <span>View All Gallery</span>
             <Icons.ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
