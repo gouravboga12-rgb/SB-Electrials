@@ -64,14 +64,7 @@ export default function Calculator() {
           {/* Cost Estimation Calculator (Matches image copy 8.png) */}
           <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 relative text-left">
             
-            {/* Close/Reset button representation */}
-            <button 
-              onClick={handleReset} 
-              className="absolute top-5 right-5 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full p-2 transition-colors cursor-pointer"
-              title="Reset Calculator"
-            >
-              <Icons.X className="h-4.5 w-4.5" />
-            </button>
+
 
             <h3 className="text-xl font-extrabold text-slate-900 pr-8">
               Cost Estimation Calculator
