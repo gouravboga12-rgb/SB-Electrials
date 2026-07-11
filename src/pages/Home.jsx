@@ -414,13 +414,11 @@ export default function Home() {
               </a>
               
               <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#/services"
                 className="bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 text-white font-extrabold px-8 py-4 rounded-xl flex items-center justify-center gap-2 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-sm backdrop-blur-sm"
               >
-                <Icons.MessageCircle className="h-5 w-5" />
-                <span>Chat on WhatsApp</span>
+                <Icons.LayoutGrid className="h-5 w-5" />
+                <span>View All Services</span>
               </a>
             </div>
           </div>
