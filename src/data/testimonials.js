@@ -30,5 +30,37 @@ export const testimonials = [
     rating: 5,
     text: "Highly reliable team! We had constant power fluctuation issues at our workshop. SB Electricals installed a hybrid solar inverter setup. No power cuts, no downtime, and the after-sales support is outstanding.",
     category: "Commercial"
+  },
+  {
+    id: 5,
+    name: "Sunitha Gowda",
+    role: "Homeowner, Banashankari",
+    rating: 5,
+    text: "Amazing experience! The site survey was done the next day after contacting. They helped us secure the BESCOM net-metering approvals quickly. Highly recommend their solar services.",
+    category: "Residential"
+  },
+  {
+    id: 6,
+    name: "Rajesh M.",
+    role: "Proprietor, RK Enterprises",
+    rating: 5,
+    text: "Very prompt support and clear explanations of the costing. The solar panels look neat and we are already noticing significant drops in our factory electricity bills.",
+    category: "Commercial"
+  },
+  {
+    id: 7,
+    name: "Karan Malhotra",
+    role: "Villa Owner, Whitefield",
+    rating: 5,
+    text: "Exceptional service from structural welding to final configuration. Our 5kW rooftop system has been running perfectly for 6 months now. Maintenance team is very responsive.",
+    category: "Residential"
+  },
+  {
+    id: 8,
+    name: "Priya Sharma",
+    role: "Owner, Blossoms Boutique",
+    rating: 5,
+    text: "Clean and quick execution. The installers were courteous and cleaned up the site completely after mounting the panels. Excellent customer service!",
+    category: "Residential"
   }
 ];

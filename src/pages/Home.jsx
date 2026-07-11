@@ -863,7 +863,7 @@ export default function Home() {
       {/* ========================================================================= */}
       {/* 8. TESTIMONIALS SECTION (HAPPY CUSTOMERS) */}
       {/* ========================================================================= */}
-      <section className="py-24 bg-slate-50/30 border-b border-slate-100">
+      <section className="py-24 bg-slate-50/30 border-b border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4" data-aos="fade-down">
@@ -875,13 +875,15 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.slice(0, 3).map((test, index) => (
+        </div>
+
+        {/* Full-width scrolling container */}
+        <div className="marquee-container py-4">
+          <div className="marquee-track flex gap-6 px-4">
+            {[...testimonials, ...testimonials].map((test, index) => (
               <div
-                key={test.id}
-                className="glass-panel p-8 rounded-3xl text-left bg-white border border-slate-200/80 shadow-md flex flex-col justify-between hover:border-emerald-200 transition-all duration-300"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
+                key={`${test.id}-${index}`}
+                className="glass-panel p-8 rounded-3xl text-left bg-white border border-slate-200/80 shadow-md flex flex-col justify-between hover:border-emerald-200 transition-all duration-300 w-[290px] sm:w-[350px] md:w-[400px] flex-shrink-0"
               >
                 <div className="space-y-4">
                   <div className="flex text-amber-400">
@@ -889,7 +891,7 @@ export default function Home() {
                       <Icons.Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <p className="text-slate-600 text-xs leading-relaxed font-bold italic">
+                  <p className="text-slate-600 text-xs leading-relaxed font-bold italic h-24 overflow-y-auto pr-1">
                     "{test.text}"
                   </p>
                 </div>
@@ -906,7 +908,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
