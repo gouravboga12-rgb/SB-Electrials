@@ -12,6 +12,7 @@ import imgAfter from '../assets/images/solar_repair.png';
 import imgEco from '../assets/images/service_residential.png';
 import imgCustom from '../assets/images/service_inverter.png';
 import imgSafety from '../assets/images/service_maintenance.png';
+import whyChooseUsBanner from '../assets/images/why_choose_us_banner.png';
 
 // Dynamic Icon Component helper
 const LucideIcon = ({ name, className }) => {
@@ -142,7 +143,7 @@ export default function WhyChooseUs() {
           {/* Action Visual Banner Image */}
           <div className="mt-16 rounded-[32px] overflow-hidden shadow-2xl border border-slate-200 bg-slate-100" data-aos="zoom-in">
             <img 
-              src={imgCert} 
+              src={whyChooseUsBanner} 
               alt="SB Electricals technician maintaining solar panels" 
               className="w-full h-[280px] sm:h-[380px] lg:h-[480px] object-cover"
             />
