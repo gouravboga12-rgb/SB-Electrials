@@ -14,6 +14,7 @@ import g18 from '../assets/images/gallery/gallery_18.png';
 import g25 from '../assets/images/gallery/gallery_25.png';
 import g26 from '../assets/images/gallery/gallery_26.png';
 import g27 from '../assets/images/gallery/gallery_27.png';
+import g29 from '../assets/images/gallery/gallery_29.png';
 
 const GALLERY_ITEMS = [
   { src: g9,  alt: 'Solar Panel Installation - Project 1' },
@@ -28,6 +29,7 @@ const GALLERY_ITEMS = [
   { src: g25, alt: 'Premium Solar Setup - Project 10' },
   { src: g26, alt: 'Solar Panel Array - Project 11' },
   { src: g27, alt: 'Completed Solar Project - Project 12' },
+  { src: g29, alt: 'Rooftop Panel Alignment - Project 13' },
 ];
 
 export default function Gallery() {
