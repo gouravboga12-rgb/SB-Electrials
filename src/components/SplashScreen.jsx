@@ -60,19 +60,19 @@ export default function SplashScreen({ onFinish }) {
           src={logoImg}
           alt="SB Electricals"
           style={{
-            width: '100px',
-            height: '100px',
+            width: '180px',
+            height: '180px',
             objectFit: 'contain',
-            filter: 'drop-shadow(0 8px 24px rgba(16,185,129,0.22))',
+            filter: 'drop-shadow(0 12px 32px rgba(16,185,129,0.28))',
           }}
         />
         {/* Company Name */}
         <div style={{ textAlign: 'center', lineHeight: 1 }}>
           <div
             style={{
-              fontSize: '26px',
+              fontSize: '40px',
               fontWeight: 900,
-              letterSpacing: '0.12em',
+              letterSpacing: '0.14em',
               color: '#0f172a',
               fontFamily: 'Inter, sans-serif',
               textTransform: 'uppercase',
@@ -83,12 +83,12 @@ export default function SplashScreen({ onFinish }) {
           </div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '14px',
               fontWeight: 700,
-              letterSpacing: '0.22em',
+              letterSpacing: '0.26em',
               color: '#64748b',
               textTransform: 'uppercase',
-              marginTop: '5px',
+              marginTop: '8px',
               fontFamily: 'Inter, sans-serif',
             }}
           >
@@ -100,7 +100,7 @@ export default function SplashScreen({ onFinish }) {
       {/* Animated progress bar */}
       <div
         style={{
-          width: '120px',
+          width: '200px',
           height: '3px',
           borderRadius: '2px',
           background: '#e2e8f0',
