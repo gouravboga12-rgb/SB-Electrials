@@ -492,10 +492,10 @@ export default function Home() {
             </div>
             <div className="space-y-1">
               <h4 className="text-sm font-bold text-emerald-850">
-                Save up to 100% on Electricity Bills
+                Save up to 90% on Electricity Bills
               </h4>
               <p className="text-xs text-slate-650 font-semibold leading-relaxed">
-                By switching to solar, your monthly electricity bills can be saved up to <strong>100%</strong>, and you can even <strong>generate revenue</strong> by selling surplus clean energy back to the grid.
+                By switching to solar, your monthly electricity bills can be saved up to <strong>90%</strong>, and you can even <strong>generate revenue</strong> by selling surplus clean energy back to the grid.
               </p>
             </div>
           </div>
@@ -981,7 +981,7 @@ export default function Home() {
                   className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-4 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all duration-300"
                 >
                   <Icons.Phone className="h-4 w-4" />
-                  <span>Call or WhatsApp: +91 88677 10294</span>
+                  <span>Call: +91 88677 10294 / +91 87928 29882</span>
                 </a>
                 <a
                   href={whatsappUrl}
@@ -1034,9 +1034,14 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="text-xs font-semibold text-slate-400">Call Us Anytime</h4>
-                  <a href="tel:+918867710294" className="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors">
-                    +91 88677 10294
-                  </a>
+                  <div className="flex flex-col">
+                    <a href="tel:+918867710294" className="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors">
+                      +91 88677 10294
+                    </a>
+                    <a href="tel:+918792829882" className="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors mt-0.5">
+                      +91 87928 29882
+                    </a>
+                  </div>
                   <p className="text-[10px] text-slate-400 mt-0.5 font-semibold">Monday to Saturday: 9am - 7pm</p>
                 </div>
               </div>

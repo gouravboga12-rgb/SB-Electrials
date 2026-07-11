@@ -101,9 +101,12 @@ export default function Footer() {
                 <MapPin className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
                 <span>Ground Floor 183/1 Madhura Nagar 2nd main Moodalpalya Nagarbhavi Stage 2, Bengaluru, Bengaluru Urban-560072</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-emerald-500 flex-shrink-0" />
-                <a href="tel:+918867710294" className="hover:text-emerald-500 transition-colors">+91 88677 10294</a>
+              <li className="flex items-start gap-2">
+                <Phone className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <div className="flex flex-col">
+                  <a href="tel:+918867710294" className="hover:text-emerald-500 transition-colors font-semibold">+91 88677 10294</a>
+                  <a href="tel:+918792829882" className="hover:text-emerald-500 transition-colors font-semibold mt-0.5">+91 87928 29882</a>
+                </div>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-emerald-500 flex-shrink-0 break-all" />

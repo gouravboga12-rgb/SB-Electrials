@@ -22,7 +22,7 @@ const FAQ_DATA = [
   },
   {
     q: "Why Should I Buy Solar?",
-    a: "Going solar drastically reduces your monthly electricity bills, often cutting them by 70–100%. You also become less dependent on the grid, protect yourself from rising tariff rates, increase your property value, and contribute to a cleaner environment. In Bengaluru, the payback period is typically 4–6 years."
+    a: "Going solar drastically reduces your monthly electricity bills, often cutting them by 70–90%. You also become less dependent on the grid, protect yourself from rising tariff rates, increase your property value, and contribute to a cleaner environment. In Bengaluru, the payback period is typically 4–6 years."
   },
   {
     q: "What Is Solar Energy And How Does It Work?",
@@ -54,7 +54,7 @@ const FAQ_DATA = [
   },
   {
     q: "If I Have Solar Panels, Would I Still Get An Electricity Bill?",
-    a: "Yes, but it will be significantly lower — often close to zero or even a credit bill (negative bill). On net metering, your electricity bill will show the difference between what you consumed from the grid and what you exported. Most SB Electricals customers see 80–100% bill reduction."
+    a: "Yes, but it will be significantly lower — often close to zero or even a credit bill (negative bill). On net metering, your electricity bill will show the difference between what you consumed from the grid and what you exported. Most SB Electricals customers see 80–90% bill reduction."
   },
   {
     q: "Can Solar Power Be Stored?",

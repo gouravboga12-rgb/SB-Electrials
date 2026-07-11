@@ -99,10 +99,10 @@ export default function Calculator() {
               </div>
               <div className="space-y-1">
                 <h4 className="text-sm font-bold text-emerald-850">
-                  Save up to 100% on Electricity Bills
+                  Save up to 90% on Electricity Bills
                 </h4>
                 <p className="text-xs text-slate-650 font-semibold leading-relaxed">
-                  By switching to solar, your monthly electricity bills can be saved up to <strong>100%</strong>, and you can even <strong>generate revenue</strong> by selling surplus clean energy back to the grid.
+                  By switching to solar, your monthly electricity bills can be saved up to <strong>90%</strong>, and you can even <strong>generate revenue</strong> by selling surplus clean energy back to the grid.
                 </p>
               </div>
             </div>

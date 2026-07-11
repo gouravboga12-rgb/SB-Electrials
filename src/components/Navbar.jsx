@@ -82,7 +82,7 @@ export default function Navbar() {
                 className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs lg:text-sm px-5 py-3 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-md hover:shadow-emerald-600/20 hover:-translate-y-0.5 active:translate-y-0"
               >
                 <Phone className="h-4 w-4" />
-                <span>Call or WhatsApp | +91 88677 10294</span>
+                <span>Call: +91 88677 10294 / +91 87928 29882</span>
               </a>
             </div>
 

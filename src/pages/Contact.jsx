@@ -124,9 +124,14 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-slate-500">Call Us Anytime</h4>
-                  <a href="tel:+918867710294" className="text-lg font-bold text-slate-900 hover:text-emerald-600 transition-colors duration-300">
-                    +91 88677 10294
-                  </a>
+                  <div className="flex flex-col">
+                    <a href="tel:+918867710294" className="text-lg font-bold text-slate-900 hover:text-emerald-600 transition-colors duration-300">
+                      +91 88677 10294
+                    </a>
+                    <a href="tel:+918792829882" className="text-lg font-bold text-slate-900 hover:text-emerald-600 transition-colors duration-300 mt-1">
+                      +91 87928 29882
+                    </a>
+                  </div>
                   <p className="text-xs text-slate-400 mt-1 font-semibold">Available Monday to Saturday</p>
                 </div>
               </div>
