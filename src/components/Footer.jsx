@@ -160,7 +160,7 @@ export default function Footer() {
       {/* Copyright Line */}
       <div className="border-t border-slate-900/60 pt-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-slate-500">
-          <p>&copy; {new Date().getFullYear()} SB Electricals. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} SB Electricals. All Rights Reserved. | Developed by <a href="https://www.codtechitsolutions.com/" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors font-semibold">CODTECH IT SOLUTION</a></p>
           <div className="flex gap-4">
             <Link to="/about" className="hover:text-slate-400">Privacy Policy</Link>
             <span className="text-slate-800">|</span>
